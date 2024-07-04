@@ -1,13 +1,10 @@
 import React from "react";
-import { Inter } from "next/font/google";
 import { Todo } from "@/lib/types";
 import { usePersistedState } from "@/lib/hooks/usePersistedState";
 import serializeTodoList from "@/lib/serializeTodoList";
 import deserializeTodoList from "@/lib/deserializeTodoList";
 import TodoList from "@/components/ui/TodoList";
 import AddTodoItem from "@/components/ui/AddTodoItem";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [todos, setTodos] = usePersistedState<Array<Todo>>(
@@ -44,23 +41,19 @@ export default function Home() {
   };
 
   return (
-    <div
-      className={`flex h-svh w-screen items-center justify-center overflow-hidden text-gray-950 dark:text-gray-200 ${inter.className}`}
-    >
-      <div className="flex h-5/6 w-11/12 max-w-3xl flex-col gap-4 sm:w-9/12 lg:w-6/12">
-        <div className="flex flex-col gap-4 overflow-auto text-center">
-          <h1 className="text-3xl font-bold">TODO Application</h1>
-          <AddTodoItem handleAdd={handleAdd} />
-        </div>
-        <div className="flex flex-1 flex-col overflow-auto rounded-lg bg-gray-50 p-3 shadow-lg lg:p-5 dark:bg-gray-800">
-          <ul className="flex flex-1 flex-col gap-2 overflow-scroll">
-            <TodoList
-              todos={todos}
-              handleDelete={handleDelete}
-              handleCheck={handleCheck}
-            />
-          </ul>
-        </div>
+    <div className="flex h-5/6 w-11/12 max-w-3xl flex-col gap-4 sm:w-9/12 lg:w-6/12">
+      <div className="flex flex-col gap-4 overflow-auto text-center">
+        <h1 className="text-3xl font-bold">TODO Application</h1>
+        <AddTodoItem handleAdd={handleAdd} />
+      </div>
+      <div className="flex flex-1 flex-col overflow-auto rounded-lg bg-gray-50 p-3 shadow-lg lg:p-5 dark:bg-gray-800">
+        <ul className="flex flex-1 flex-col gap-2 overflow-scroll">
+          <TodoList
+            todos={todos}
+            handleDelete={handleDelete}
+            handleCheck={handleCheck}
+          />
+        </ul>
       </div>
     </div>
   );
