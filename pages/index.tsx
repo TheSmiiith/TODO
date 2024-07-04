@@ -42,6 +42,20 @@ export default function Home() {
     );
   };
 
+  const renderNoTodos = () => {
+    return (
+      <div className="flex flex-1 flex-col items-center justify-center">
+        <Icons.Pencil />
+        <h1 className="mt-4 text-xl font-semibold text-gray-900 dark:text-gray-100">
+          No Todos
+        </h1>
+        <p className="text-gray-600 dark:text-gray-300">
+          Add some to see them here
+        </p>
+      </div>
+    );
+  };
+
   const renderTodos = () => {
     return todos.map((todo) => {
       return (
@@ -81,9 +95,9 @@ export default function Home() {
 
   return (
     <div
-      className={`flex h-screen w-screen items-center justify-center overflow-hidden text-gray-950 dark:text-gray-200 ${inter.className}`}
+      className={`flex h-svh w-screen items-center justify-center overflow-hidden text-gray-950 dark:text-gray-200 ${inter.className}`}
     >
-      <div className="flex h-4/5 w-11/12 flex-col gap-4 p-4 sm:w-9/12 lg:w-6/12">
+      <div className="flex h-5/6 w-11/12 max-w-3xl flex-col gap-4 sm:w-9/12 lg:w-6/12">
         <div className="flex flex-col gap-4 overflow-auto text-center">
           <h1 className="text-3xl font-bold">TODO Application</h1>
           <form className="flex flex-row" onSubmit={handleAdd}>
@@ -105,7 +119,7 @@ export default function Home() {
         </div>
         <div className="flex flex-1 flex-col overflow-auto rounded-lg bg-gray-50 p-3 shadow-lg lg:p-5 dark:bg-gray-800">
           <ul className="flex flex-1 flex-col gap-2 overflow-scroll">
-            {renderTodos()}
+            {todos.length === 0 ? renderNoTodos() : renderTodos()}
           </ul>
         </div>
       </div>
