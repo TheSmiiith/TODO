@@ -11,9 +11,6 @@ export default function Home() {
   const [nextId, setNextId] = useState<number>(0);
   const [title, setTitle] = useState<string>("");
 
-  const handleDelete = (id: Todo["id"]) =>
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
-
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -29,23 +26,50 @@ export default function Home() {
     setTitle("");
   };
 
+  const handleDelete = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    id: Todo["id"],
+  ) => {
+    e.stopPropagation();
+    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+  };
+
+  const handleCheck = (id: Todo["id"]) => {
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo,
+      ),
+    );
+  };
+
   const renderTodos = () => {
     return todos.map((todo) => {
       return (
         <li
           key={todo.id}
           className="group flex cursor-pointer items-center justify-between rounded bg-white p-4 shadow hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600"
+          onClick={() => handleCheck(todo.id)}
         >
-          <div className="flex w-full flex-row content-between">
-            <div className="flex flex-1 flex-col">
-              <h3 className="text-lg">{todo.title}</h3>
-              <span className="text-sm text-gray-400">
+          <div className="flex w-full flex-row content-between items-center">
+            <input
+              type="checkbox"
+              className="mr-4 h-5 w-5"
+              checked={todo.completed}
+              readOnly
+            />
+            <div className={`flex flex-1 flex-col`}>
+              <h3
+                className={`text-lg ${todo.completed && "text-gray-400 line-through"}`}
+              >
+                {todo.title}
+              </h3>
+              <span className={`text-sm text-gray-400`}>
                 {dateFormatter.format(todo.date)}
               </span>
             </div>
             <button
               className="hidden text-gray-400 hover:text-red-500 group-hover:block"
-              onClick={() => handleDelete(todo.id)}
+              onClick={(e) => handleDelete(e, todo.id)}
             >
               <Icons.Trash />
             </button>
