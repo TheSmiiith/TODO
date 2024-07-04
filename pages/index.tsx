@@ -1,14 +1,22 @@
 import { Inter } from "next/font/google";
 import React, { useState } from "react";
-import { Todo } from "@/pages/constants";
+import { Todo } from "@/lib/types";
 import { dateFormatter } from "@/lib/dateFormatter";
 import { Icons } from "@/components/Icons";
+import { usePersistedState } from "@/lib/hooks/usePersistedState";
+import serializeTodoList from "@/lib/serializeTodoList";
+import deserializeTodoList from "@/lib/deserializeTodoList";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const [todos, setTodos] = useState<Array<Todo>>([]);
-  const [nextId, setNextId] = useState<number>(0);
+  const [todos, setTodos] = usePersistedState<Array<Todo>>(
+    "todos",
+    [],
+    serializeTodoList,
+    deserializeTodoList,
+  );
+  const [nextId, setNextId] = usePersistedState<number>("nextId", 0);
   const [title, setTitle] = useState<string>("");
 
   const handleAdd = (e: React.FormEvent) => {
@@ -50,7 +58,7 @@ export default function Home() {
           No Todos
         </h1>
         <p className="text-gray-600 dark:text-gray-300">
-          Add some to see them here
+          Add some items to see them here
         </p>
       </div>
     );
@@ -119,7 +127,7 @@ export default function Home() {
         </div>
         <div className="flex flex-1 flex-col overflow-auto rounded-lg bg-gray-50 p-3 shadow-lg lg:p-5 dark:bg-gray-800">
           <ul className="flex flex-1 flex-col gap-2 overflow-scroll">
-            {todos.length === 0 ? renderNoTodos() : renderTodos()}
+            {!todos || todos.length === 0 ? renderNoTodos() : renderTodos()}
           </ul>
         </div>
       </div>
