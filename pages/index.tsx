@@ -96,7 +96,8 @@ export default function Home() {
             />
             <button
               type="submit"
-              className="text-nowrap rounded-r bg-blue-500 px-4 text-white hover:bg-blue-600"
+              className="text-nowrap rounded-r bg-blue-500 px-4 text-white hover:bg-blue-600 disabled:hover:cursor-not-allowed disabled:hover:bg-gray-400"
+              disabled={!title}
             >
               + Add
             </button>
