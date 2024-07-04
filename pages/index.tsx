@@ -2,10 +2,10 @@ import { Inter } from "next/font/google";
 import React, { useState } from "react";
 import { Todo } from "@/lib/types";
 import { dateFormatter } from "@/lib/dateFormatter";
-import { Icons } from "@/components/Icons";
 import { usePersistedState } from "@/lib/hooks/usePersistedState";
 import serializeTodoList from "@/lib/serializeTodoList";
 import deserializeTodoList from "@/lib/deserializeTodoList";
+import { TrashIcon, PencilIcon } from "@heroicons/react/24/outline";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -52,8 +52,8 @@ export default function Home() {
 
   const renderNoTodos = () => {
     return (
-      <div className="flex flex-1 flex-col items-center justify-center">
-        <Icons.Pencil />
+      <div className="flex flex-1 flex-col items-center justify-center text-center">
+        <PencilIcon className="size-12" />
         <h1 className="mt-4 text-xl font-semibold text-gray-900 dark:text-gray-100">
           No Todos
         </h1>
@@ -93,7 +93,7 @@ export default function Home() {
               className="hidden text-gray-400 hover:text-red-500 group-hover:block"
               onClick={(e) => handleDelete(e, todo.id)}
             >
-              <Icons.Trash />
+              <TrashIcon className="size-5 lg:size-6" />
             </button>
           </div>
         </li>
